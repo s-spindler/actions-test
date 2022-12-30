@@ -1,0 +1,14 @@
+name: project build
+on:
+  - push
+  - workflow_dispatch
+jobs:
+  build:
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@2541b1294d2704b0964813337f33b291d3f8596b # tag=v3
+
+      - name: Build using maven
+        id: build
+        run: |
+          mvn clean package
