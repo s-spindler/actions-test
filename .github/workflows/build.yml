@@ -40,3 +40,14 @@ jobs:
           name: maven-build-outputs
           path: ${{ steps.build.outputs.artifact_pattern }}
           if-no-files-found: error
+
+  provenance:
+    needs: ["build"]
+    permissions:
+      actions: read
+      id-token: write
+      contents: write
+    uses: slsa-framework/slsa-github-generator/.github/workflows/generator_generic_slsa3.yml@v1.4.0
+    with:
+      base64-subjects: "${{ needs.build.outputs.hashes }}"
+      upload-assets: true
